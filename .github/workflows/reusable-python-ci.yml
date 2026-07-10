@@ -181,7 +181,7 @@ jobs:
           # Adopters reference this org's reusable workflow via @main; requiring
           # hash-pinning would break auto-updates. zizmor still runs every other
           # audit (template-injection, etc.) — only the pinning policy is eased.
-          printf 'rules:\n  unpinned-uses:\n    config:\n      policies:\n        "*": ref-pinning\n' > /tmp/zizmor.yml
+          printf 'rules:\n  unpinned-uses:\n    config:\n      policies:\n        "*": ref-pin\n' > /tmp/zizmor.yml
           zizmor --config /tmp/zizmor.yml .github/workflows/
 
       - name: Skip (no workflows found)
