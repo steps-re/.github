@@ -1,0 +1,29 @@
+name: Python CI
+
+# Starter workflow: adopts the steps-re shared reusable Python CI.
+# This calls a workflow living in steps-re/.github so lint/test/secret-scan
+# fixes land once and every repo picks them up automatically.
+#
+# After adding this file, delete/adjust the `with:` block to match your repo
+# (or just delete it entirely to use the defaults).
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  schedule:
+    # Weekly, Monday 09:00 UTC — catches dependency drift (e.g. a new NumPy
+    # major version) even when no one has touched this repo in months.
+    - cron: "0 9 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  ci:
+    uses: steps-re/.github/.github/workflows/reusable-python-ci.yml@main
+    with:
+      python-versions: '["3.11","3.12"]'
+      run-typecheck: false
+      package-manager: pip

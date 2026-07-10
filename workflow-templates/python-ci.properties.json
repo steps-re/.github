@@ -1,0 +1,7 @@
+{
+  "name": "Python CI (steps-re shared)",
+  "description": "Lint, test, secret-scan, and workflow-lint via the steps-re shared reusable workflow. Recommended starter for all steps-re Python repos.",
+  "iconName": "octicon-checklist",
+  "categories": ["Continuous integration", "Python"],
+  "filePatterns": ["pyproject\\.toml$", "setup\\.py$", "setup\\.cfg$", "requirements.*\\.txt$"]
+}
