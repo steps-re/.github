@@ -177,10 +177,12 @@ jobs:
         if: steps.wf_check.outputs.found == 'true'
         run: |
           python -m pip install --upgrade pip zizmor
-          # Default persona: catches real issues (template-injection, etc.) but
-          # not pedantic-only audits like unpinned-uses — which would otherwise
-          # flag every adopter's own `uses: steps-re/.github/...@main` line.
-          zizmor .github/workflows/
+          # Relax the unpinned-uses policy to allow ref-pinning (branch/tag).
+          # Adopters reference this org's reusable workflow via @main; requiring
+          # hash-pinning would break auto-updates. zizmor still runs every other
+          # audit (template-injection, etc.) — only the pinning policy is eased.
+          printf 'rules:\n  unpinned-uses:\n    config:\n      policies:\n        "*": ref-pinning\n' > /tmp/zizmor.yml
+          zizmor --config /tmp/zizmor.yml .github/workflows/
 
       - name: Skip (no workflows found)
         if: steps.wf_check.outputs.found == 'false'
